@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz - Projeto Corpo Perfeito</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .quiz-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+    .option {
+      display: block;
+      background: #eaeaea;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .option:hover {
+      background: #d6d6d6;
+    }
+    #next-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
+    }
+    #result {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2 id="question">Carregando pergunta...</h2>
+    <div id="options"></div>
+    <button id="next-btn">Próxima</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Você está contente com seu peso atual?",
+        options: ["Infelizmente não", "Sinto Vergonha", "Não tenho palavras", "Sim, adoro meu corpo"]
+      },
+      {
+        question: "Ficar acima do peso te causa alguma dificuldade?",
+        options: ["Sim", "Não"]
+      },
+      {
+        question: "Você sofre com o efeito sanfona?",
+        options: ["Sim, estou cansada disso", "Não, mas quero emagrecer", "Já sofri, hoje não sofro mais"]
+      },
+      {
+        question: "Você concorda que autoestima é importante?",
+        options: ["Concordo", "Não concordo"]
+      },
+      {
+        question: "Quantos kilos você quer perder?",
+        options: ["Entre 20 e 30 kilos", "Entre 10 e 20 kilos", "Menos de 10 kilos"]
+      },
+      {
+        question: "Qual seu peso atualmente?",
+        options: ["Acima de 100 kilos", "Entre 70 e 100 kilos", "Entre 50 e 70 kilos"]
+      },
+      {
+        question: "Como você avalia seu conhecimento em perda de peso?",
+        options: ["Zero conhecimento", "Intermediário, quero aprender mais", "Avançado, já sei como perder peso"]
+      },
+      {
+        question: "Em 8 semanas, como você gostaria de estar?",
+        options: ["Quero estar mais magra e alcançar meus objetivos", "Quero estar linda e feliz com meu peso", "Quero continuar com meu peso"]
+      },
+      {
+        question: "Você tem R$10,00 para os ingredientes?",
+        options: ["Sim, pronta para começar", "Não, mas eu posso conseguir", "Estou sem dinheiro"]
+      },
+      {
+        question: "Você se compromete a seguir o plano que vou desenvolver para você?",
+        options: ["Sim, me comprometo", "Não sei se vou conseguir"]
+      },
+      {
+        question: "Você tem 10 minutinhos por dia para realizar o plano?",
+        options: ["Com toda certeza", "Não, mas vou tentar", "Acho que tenho", "Nem eu sei"]
+      }
+    ];
+
+    let currentQuestion = 0;
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("next-btn");
+    const resultEl = document.getElementById("result");
+
+    function loadQuestion() {
+      const current = quizData[currentQuestion];
+      questionEl.textContent = current.question;
+      optionsEl.innerHTML = "";
+      current.options.forEach(opt => {
+        const btn = document.createElement("div");
+        btn.textContent = opt;
+        btn.classList.add("option");
+        btn.addEventListener("click", () => selectOption(btn));
+        optionsEl.appendChild(btn);
+      });
+      nextBtn.style.display = "none";
+    }
+
+    function selectOption(selected) {
+      const options = document.querySelectorAll(".option");
+      options.forEach(opt => opt.style.background = "#eaeaea");
+      selected.style.background = "#a5d6a7";
+      nextBtn.style.display = "block";
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        questionEl.style.display = "none";
+        optionsEl.style.display = "none";
+        nextBtn.style.display = "none";
+        resultEl.textContent = "🎉 Obrigada por responder! Seu plano será preparado com base nas respostas.";
+      }
+    });
+
+    loadQuestion();
+  </script>
+</body>
+</html>
